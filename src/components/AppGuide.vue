@@ -57,7 +57,7 @@ export default {
 
 <style>
 div #app_guide {
-    position: absolute;
+    position: sticky;
     right: 700px;
     width: 317px;
     border-left-style: outset;

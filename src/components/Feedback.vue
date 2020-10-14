@@ -1,18 +1,23 @@
 <template>
-    <form id="feedback_div" @submit.prevent="submitCheck">
+    <form id="feedback_div" @submit.prevent>
         <label for="feedback_input">
             <strong>Enter Feedback!</strong>
             ({{ newFeedCount}}/50)
         </label>
         <textarea id="feedback_input" cols='5' placeholder='Dont forget to give feedback!' v-model.trim="data.newFeed" :class="{'sizeLimit':newFeedCount > 50}"/>
+        <div class = "alert_div" v-if="data.alert">
+             <alert-box>Please enter the feed!</alert-box>
+        </div>
         <br>
-        <button>SUBMIT</button>
+        <button @click="submitCheck">SUBMIT</button>
         <br><br>
         <label for='feedback_submitted'><strong>Submitted Feedbacks!!!</strong></label>
-        <p class='feedback_list' v-for="feed in data.feedbackList" v-bind:key="feed.value">
+        <p class='feedback_list' v-for="feed in data.feedbackList" v-bind:key="feed.id">
             {{feed.text}}
+            <router-link id="feedback_user" :to="{name:'UserInfo', params:{userId: feed.id, feedText: feed.text}}">User Details</router-link>
             <br>
         </p>
+        
     </form>
 </template>
 
@@ -24,22 +29,24 @@ export default {
         const data = reactive({
             newFeed:'',
             feedbackList: [
-                {value:1, text:'Awesome...'},
-                {value:2, text:'Good Experiance!'}
-            ]
+                {id:1, text:'Awesome...'},
+                {id:2, text:'Good Experiance!'}
+            ],
+            alert: false
         })
         //const submitFeedback = computed(() => submitCheck())
         const newFeedCount = computed(() => data.newFeed.length)
 
         function submitCheck() {
             if(data.newFeed===''){
-              alert('Please enter the feed!')
+              data.alert = true;
             } else {
                 data.feedbackList.unshift({
-                    value: data.feedbackList.length + 1,
+                    id: data.feedbackList.length + 1,
                     text: data.newFeed
                 })
                 data.newFeed='';
+                data.alert = false;
             }
         }
         return {
@@ -63,7 +70,7 @@ textarea#feedback_input {
 }
 .feedback_list{
     padding: 2px;
-    background-color: white;
+    background-color: #cdc9c9;
     border-radius: 5px;
     border: 1px solid #DFE3E8;
     box-sizing: border-box;
@@ -76,5 +83,19 @@ textarea#feedback_input {
 .sizeLimit{
     color: red;
     border-color: red;
+}
+
+#feedback_user {
+    float: right;
+    border-radius: 11px;
+    height: 17px;
+    font-size: smaller;
+    border-width: inherit;
+    text-decoration: blink;
+}
+
+.alert_div{
+    text-align: initial;
+    color: darkred;
 }
 </style>

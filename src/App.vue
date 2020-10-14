@@ -1,38 +1,25 @@
 <template>
-  <SovaAppGen :welcome="message"/>
+  <div id="nav">
+    <router-link to="/">Home</router-link>
+  </div>
+  <router-view/>
+ 
 
 </template>
 
-<script>
-import SovaAppGen from './components/SovaAppGen.vue'
-
-export default {
-  name: 'App',
-  components: {
-    SovaAppGen
-  },
-  data(){
-    return{
-      message: "Welcome to Sova App Generator",
-      symbol: "."
-    }
-  },
-  mounted(){
-    this.message = this.message + this.symbol;
-  },
-  created(){
-    this.message = this.message + "!";
-  }
+<style scoped>
+#nav {
+  padding: 14px 5%;
+  background: darkslategray;
+  text-align: initial;
 }
-</script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+#nav a {
+  font-weight: bold;
+  color: antiquewhite;
+}
+
+#nav a.router-link-exact-active {
+  color: antiquewhite;
 }
 </style>
