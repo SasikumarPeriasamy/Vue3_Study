@@ -4,21 +4,24 @@ export const users = [
         "firstName": "Sasi",
         "lastName": "Kumar",
         "email": "sasi@gmail",
-        "admin": true
+        "admin": true,
+        "feedText" : "Awesome..."
     },
     {
         "id": 2,
         "firstName": "Pravin",
         "lastName": "Kumar",
         "email": "pravin@gmail",
-        "admin": false
+        "admin": false,
+        "feedText": "Good Experiance!"
     },
     {
         "id": 3,
         "firstName": "Mohammed",
         "lastName": "Rizwan",
         "email": "rits@gmail",
-        "admin": false
+        "admin": false,
+        "feedText" : "Ecellent--!"
     }
 ]
 

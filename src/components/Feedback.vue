@@ -12,9 +12,9 @@
         <button @click="submitCheck">SUBMIT</button>
         <br><br>
         <label for='feedback_submitted'><strong>Submitted Feedbacks!!!</strong></label>
-        <p class='feedback_list' v-for="feed in data.feedbackList" v-bind:key="feed.id">
-            {{feed.text}}
-            <router-link id="feedback_user" :to="{name:'UserInfo', params:{userId: feed.id, feedText: feed.text}}">User Details</router-link>
+        <p class='feedback_list' v-for="feed in users" v-bind:key="feed.id">
+            {{feed.feedText}}
+            <router-link id="feedback_user" :to="{name:'UserInfo', params:{userId: feed.id}}">User Details</router-link>
             <br>
         </p>
         
@@ -23,15 +23,12 @@
 
 <script>
 import { computed, reactive } from 'vue'
+import {users} from '../assets/users.js'
 export default {
     name: 'Feedback',
     setup(){
         const data = reactive({
             newFeed:'',
-            feedbackList: [
-                {id:1, text:'Awesome...'},
-                {id:2, text:'Good Experiance!'}
-            ],
             alert: false
         })
         //const submitFeedback = computed(() => submitCheck())
@@ -41,19 +38,21 @@ export default {
             if(data.newFeed===''){
               data.alert = true;
             } else {
-                data.feedbackList.unshift({
-                    id: data.feedbackList.length + 1,
-                    text: data.newFeed
+                users.push({
+                    id: users.length + 1,
+                    feedText: data.newFeed
                 })
                 data.newFeed='';
                 data.alert = false;
             }
         }
+        console.log(users)
         return {
             data,
             // submitFeedback,
             newFeedCount,
-            submitCheck
+            submitCheck,
+            users
         }
     }
 }
