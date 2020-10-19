@@ -1,4 +1,5 @@
 <template>
+<h1><strong>User Details </strong></h1>
     <div id = 'user_div'>
         <label for = 'user_name'><strong>Name</strong></label>
         &nbsp;
@@ -12,6 +13,7 @@
         &nbsp;
         <p id="user_feed">{{state.user.feedText}} </p>
         <br>
+        <router-link v-show="!state.user.firstName" :to="{name:'Admin', query: {userId:usrId}}">Register as new user </router-link>
         <router-link class='back_home' to="/">Back to Home</router-link>
     </div>
 </template>
@@ -28,18 +30,15 @@ export default {
         const store = useStore();
         const usrId = route.params.userId;
         let storeDefaultUser = store.state.User.user;
-if(!storeDefaultUser){
-        store.dispatch('User/setUser', users[0]);
-}
-storeDefaultUser = store.state.User.user;
-console.log("userinfo")
-console.log(users)
+        if(!storeDefaultUser){
+          store.dispatch('User/setUser', users[0]);
+        }
+        storeDefaultUser = store.state.User.user;
         const state = reactive({
             user: users.filter(user => user.id == usrId)[0] || storeDefaultUser
         })
-        console.log("userinfo")
-        console.log(users)
         return {
+            usrId,
             state,
             storeDefaultUser
         }
@@ -60,6 +59,13 @@ div #user_div {
 
 #user_name, #user_mail, #user_feed {
     display: contents;
+}
+
+a {
+    position: relative;
+    top: 50px;
+    font-style: italic;
+    opacity: 0.8;
 }
 
 </style>

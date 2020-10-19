@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import SovaAppGen from './../components/SovaAppGen.vue'
+import SovaAppGen from '@/components/SovaAppGen.vue'
 
 export default {
   name: 'Home',

@@ -4,9 +4,9 @@
             <strong>Enter Feedback!</strong>
             ({{ newFeedCount}}/50)
         </label>
-        <textarea id="feedback_input" cols='5' placeholder='Dont forget to give feedback!' v-model.trim="data.newFeed" :class="{'sizeLimit':newFeedCount > 50}"/>
+        <textarea v-focus id="feedback_input" cols='5' placeholder='Dont forget to give feedback!' v-model.trim="data.newFeed" :class="{'sizeLimit':newFeedCount > 50}"/>
         <div class = "alert_div" v-if="data.alert">
-             <alert-box>Please enter the feed!</alert-box>
+             <p>Please enter the feed!</p>
         </div>
         <br>
         <button @click="submitCheck">SUBMIT</button>
@@ -46,7 +46,7 @@ export default {
                 data.alert = false;
             }
         }
-        console.log(users)
+    //    console.log(users)
         return {
             data,
             // submitFeedback,
@@ -67,6 +67,7 @@ textarea#feedback_input {
     display: flex;
     width: -webkit-fill-available;
 }
+
 .feedback_list{
     padding: 2px;
     background-color: #cdc9c9;

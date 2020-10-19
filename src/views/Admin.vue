@@ -3,8 +3,8 @@
 <form id = "admin_registration" @submit.prevent="submitCheck">
     <div class="user_items">
     <label><strong>User ID</strong></label>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <input :value="[data.userId]" class="non_edit" readonly>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <input :value="[data.userId]" class="non_edit" disabled="true">
     </div>
     <div class="user_items">
     <label><strong>First Name</strong></label>
@@ -18,18 +18,18 @@
     </div>
     <div class="user_items">
     <label for = "email"><strong>Email</strong></label>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <input id="email" v-model="data.email">
     </div>
     <div class="user_items">
     <label for = "feed"><strong>Feedback</strong></label>
     &nbsp;&nbsp;&nbsp;&nbsp;
-    <textarea id="feed" placeholder="Enter you feed!" v-model="data.newFeed"/>
+    <textarea id="feed" :class="{'non_edit' : oldFeed}" :disabled="oldFeed != ''" placeholder="Enter your feed!" v-model="data.newFeed"/>
     </div>
     <br>
     <button id="register"><strong>Register!</strong></button>
     <div class = "alert_div" v-if="data.alert">
-      <alert-box>Please enter all the fields!</alert-box>
+      <p>Please enter all the fields!</p>
     </div>
 </form>
 </template>
@@ -41,25 +41,28 @@ import { useRoute } from 'vue-router';
 export default {
     name: 'Admin',
     props: {
-        userId: {
-            type : Number,
-            required: true
-        }
+        userId: Number
     },
     setup(){
         const route = useRoute();
+        const userId = route.query.userId;
+        const user = users.filter(user => user.id == userId)[0];
+        let oldFeed = '';
+        if(user){
+            oldFeed = user.feedText;
+        }
         const data = reactive({
-            userId : Number(route.query.userId),
+            userId : Number(userId),
             firstName:'',
             lastName : '',
             email: '',
-            newFeed:'',
+            newFeed: oldFeed,
             alert: false
-        }) 
+        })
         function submitCheck() {
             if(data.firstName==='' || data.lastName==='' || data.email==='' || data.newFeed==='' ){
               data.alert = true;
-            } else {
+            } else if(!user){
                 users.push({
                     id: data.userId,
                     firstName: data.firstName,
@@ -69,17 +72,27 @@ export default {
                     feedText: data.newFeed
                 })
                 clear();
-                alert('Thank you for the Resitration and Feedback');
+                alert('Thank you for the Resitration and Feedback!');
+            } else {
+                user.firstName = data.firstName;
+                user.lastName = data.lastName;
+                user.email = data.email;
+                user.admin = false;
+                clear();
+                alert('Thank you for the Resitration!');
             }
         }
         function clear(){
             data.firstName='';
             data.lastName = '';
             data.email='';
-            data.newFeed='';
+            if(!user){
+                data.newFeed='';
+            }
             data.alert = false;
         }
         return{
+            oldFeed,
             data,
             submitCheck
         }
@@ -93,6 +106,28 @@ export default {
     position: absolute;
     text-align: initial;
     line-height: 2;
+    margin: 40px 165px 26px 114px;
+    background-image: url(../assets/Profile.jpg);
+    background-attachment: scroll;
+    background-size: cover;
+    height: 71%;
+    width: 48%;
+    outline: auto;
+    border: 6px solid darkblue;
+    text-indent: 37px;
+    letter-spacing: 1px;
+    word-spacing: 3px;
+}
+
+h1 {
+    text-shadow: 2px 2px 10px red;
+}
+
+label {
+    color: black;
+    background: khaki;
+    border-radius: 4px;
+    opacity: 0.8;
 }
 
 .non_edit {

@@ -35,7 +35,7 @@ router.beforeEach(async(to, from, next) => {
   if(!user || !users[userId]) {
    // await store.dispatch('User/setUser', users[0]);
   }
-  
+
  // const requiresAdmin = to.matched.some(record => record.meta.isAdmin);
  console.log(users)
  console.log(users.filter(user => user.id==userId))

@@ -89,6 +89,7 @@ div .custom_app{
   padding: 5px;
   margin: 10px;
   text-align: left;
+  list-style-type: gujarati;
 }
 
 #app_count {
