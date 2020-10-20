@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import Admin from '../views/Admin.vue' 
 import UserInfo from '../views/UserInfo.vue'
+import Oops from '../views/Oops.vue'
 import {users} from '../assets/users.js'
 import store from '../store'
 
@@ -21,6 +22,10 @@ const routes = [
     name: 'Admin',
     component: Admin,
     props : 'userId'
+  },
+  {
+    path: '/:catchAll(.*)',
+    component: Oops
   }
 ]
 

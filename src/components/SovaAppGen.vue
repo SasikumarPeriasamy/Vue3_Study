@@ -26,7 +26,10 @@ import AppGuide from './AppGuide'
 export default {
   name: 'SovaAppGen',
   props: {
-    welcome: String
+    welcome: {
+      type: String,
+      default: 'Welcome..'
+    }
   },
   data(){
     return{
